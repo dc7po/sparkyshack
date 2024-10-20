@@ -45,7 +45,7 @@ F   | AGC   | FAST
 
 
 # Remote Control
-You can access the device via /dev/ttyUSB*, but that may change.
+You can access the device via /dev/ttyUSBx, but that may change.
 That is why you should address it via /dev/serial/by-id/... .
 
 ## Power
@@ -56,14 +56,27 @@ Power On: (Does not work with Archlinux hamlib from the extra repository. The ha
 
 Power Off:
 
-> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 set_powerstat 1**
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 set_powerstat 0**
 
 Power Status:
 
 > **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 get_powerstat**
 
 ## Set Channel
+
+### 70cm CW
 e.g. 70cm CW call frequency, 300 Hz bandwidth, 5 Watt PEP, no squelch, 700 Hz sidetone, LOCK on:
 
 > **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 432050000 M CW 300 L RFPOWER 0.050000 L SQL 0.000000 L AGC 2 L CWPITCH 700 U LOCK 1**
 
+
+### LW AM
+e.g. Listen to BBC Radio 4 on Longwave, 198 kHz, AM Narrow, IPO = AMP2, Lock on:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 198000 M AMN 6000 L RFPOWER 0.050000 L PREAMP 20 U LOCK 1**
+
+
+### CB DATA-USB
+e.g. Listen to JS8Call on CB Radio Radio Channel 25 DATA-USB, 27.245 MHz, IPO = IPO, AGC off, Attenuator off, Lock on:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 27245000 M PKTUSB 3000 L RFPOWER 0.050000 L PREAMP 0 L AGC 0 L ATT 0 U LOCK 1**
