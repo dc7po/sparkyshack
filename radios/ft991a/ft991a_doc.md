@@ -3,7 +3,6 @@
 ## Original Mic MH-31:
 * rearward switch onto position 2
 
-
 Button | Label | Value
 ---|---|---
 MENU 110   | SSB TX BPF   | 100-2900
@@ -24,6 +23,7 @@ F   | AGC   | SLOW
 
 Good starting point. A lot of pileups won with poor equipment.
 
+
 # CW MODE
 
 Button | Label | Value
@@ -42,3 +42,28 @@ MENU 057   | CW BK-IN DELAY   | 200msec
 MENU 058   | CW WAVE SHAPE   | 4msec
 MENU 059   | CW FREQ DISPLAY   | DIRECT FREQ 
 F   | AGC   | FAST
+
+
+# Remote Control
+You can access the device via /dev/ttyUSB*, but that may change.
+That is why you should address it via /dev/serial/by-id/... .
+
+## Power
+
+Power On: (Does not work with Archlinux hamlib from the extra repository. The hamlib-git from the AUR works.)
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 set_powerstat 1**
+
+Power Off:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 set_powerstat 1**
+
+Power Status:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 get_powerstat**
+
+## Set Channel
+e.g. 70cm CW call frequency, 300 Hz bandwidth, 5 Watt PEP, no squelch, 700 Hz sidetone, LOCK on:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 432050000 M CW 300 L RFPOWER 0.050000 L SQL 0.000000 L AGC 2 L CWPITCH 700 U LOCK 1**
+
