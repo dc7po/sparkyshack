@@ -45,8 +45,7 @@ F   | AGC   | FAST
 
 
 # Remote Control
-You can access the device via /dev/ttyUSBx, but that may change.
-That is why you should address it via /dev/serial/by-id/... .
+You can access the device via /dev/ttyUSBx, but that may change. That is why you should address it via /dev/serial/by-id/... .
 
 ## Power
 
@@ -77,6 +76,27 @@ e.g. Listen to BBC Radio 4 on Longwave, 198 kHz, AM Narrow, IPO = AMP2, Lock on:
 
 
 ### CB DATA-USB
-e.g. Listen to JS8Call on CB Radio Radio Channel 25 DATA-USB, 27.245 MHz, IPO = IPO, AGC off, Attenuator off, Lock on:
+e.g. Listen to JS8Call on CB Radio Channel 25 DATA-USB, 27.245 MHz, IPO = IPO, AGC off, Attenuator off, Lock on:
 
 > **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 27245000 M PKTUSB 3000 L RFPOWER 0.050000 L PREAMP 0 L AGC 0 L ATT 0 U LOCK 1**
+
+### 70cm POCSAG
+e.g. Decode POCSAG on 439.98750 MHz, 25000 Hz bandwidth (only 16 kHz possible), 5 Watt PEP, no squelch, Lock on:
+
+> **rigctl -m 1035 -r /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00F8F9FA-if00-port0 F 439987500 M PKTFM 25000 L SQL 0.000000 L RFPOWER 0.050000 U LOCK 1**
+
+**check squelch!**
+
+**make sure that the computer volume is loud enough! (e.g. alsamixer, pactl, pacmd)**
+
+Record with parec and pipe into multimon-ng:
+> **parec -r -d alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo --format=s16le --rate=22050 --channels=1 --raw | multimon-ng -t raw -c -a POCSAG1200 --timestamp -**
+
+# Firmareupdate
+
+There is a new MAIN Firmware Ver. 02-07 (06/18/24) for the FT991A available.
+
+**THIS FIRMWARE IS NOT COMPATIBLE WITH THE FT991 TRANSCEIVER!!!**
+
+[Product Website](https://www.yaesu.com/indexVS.cfm?cmd=DisplayProducts&ProdCatID=102&encProdID=490C4A71118AD0F4E825E89D821B73BB)
+
